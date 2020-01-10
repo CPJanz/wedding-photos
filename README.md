@@ -6,7 +6,7 @@ Front-end Site for displaying wedding information prior to the event and a photo
 
 ## Features
 
-- Inforomation page (Wedding event info)
+- Information page (Wedding event info)
 - Photo page
   - Displays approved photos
   - Authorized users can upload new photos
