@@ -1,7 +1,7 @@
 # wedding-photos
 
 ## Description
-This site
+Site for displaying wedding information prior to the event and a photo gallery which guests can upload photos to.
 
 ## Features
 * Inforomation page (Wedding event info)
