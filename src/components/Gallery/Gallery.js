@@ -1,6 +1,7 @@
 import React from "react";
 import Photo from "../Photo/Photo";
 import Loading from "../Loading/Loading";
+import ExpandedPhoto from "../ExpandedPhoto/ExpandedPhoto";
 
 const SAMPLE_NOTES = [
   ["Lorem ipsum"],
@@ -14,7 +15,7 @@ function generateSampleImages() {
   for (let i = 0; i < 10; i++) {
     SAMPLE_IMAGES.push({
       url: `https://picsum.photos/200?random=${i}`,
-      rotation: Math.floor(Math.random() * 20 - 10),
+      rotation: Math.floor(Math.random() * 16 - 8),
       note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)]
     });
   }
@@ -23,7 +24,8 @@ function generateSampleImages() {
 
 export default class Gallery extends React.Component {
   state = {
-    images: null
+    images: null,
+    expandedPhoto: null
   };
 
   componentDidMount() {
@@ -31,15 +33,25 @@ export default class Gallery extends React.Component {
   }
 
   render() {
-    const { images } = this.state;
+    const { images, expandedPhoto } = this.state;
     if (images === null) {
       return <Loading text="Fetching Photos" />;
     } else {
       return (
         <div className="grid">
           {images.map((image, key) => (
-            <Photo key={`photo-${key}`} {...image} />
+            <Photo
+              key={`photo-${key}`}
+              {...image}
+              onClick={() => this.setState({ expandedPhoto: image })}
+            />
           ))}
+          {expandedPhoto && (
+            <ExpandedPhoto
+              {...expandedPhoto}
+              onClick={() => this.setState({ expandedPhoto: null })}
+            />
+          )}
         </div>
       );
     }
