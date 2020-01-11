@@ -9,12 +9,12 @@ export default class Photo extends React.Component {
 
   mouseOver = () => {
     this.setState({ hovering: "hovering" });
-    // console.log("hovering");
+    console.log("hovering");
   };
 
   mouseOut = () => {
     this.setState({ hovering: "" });
-    // console.log("Not hovering");
+    console.log("Not hovering");
   };
 
   onClick = () => {
@@ -25,7 +25,6 @@ export default class Photo extends React.Component {
   render() {
     const { url, rotation, note } = this.props;
     const { hovering } = this.state;
-    // console.log(hovered);
     return (
       <div
         style={{ transform: `rotate(${rotation}deg)` }}
