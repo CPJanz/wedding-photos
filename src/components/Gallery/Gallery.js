@@ -32,6 +32,14 @@ export default class Gallery extends React.Component {
     this.setState({ images: generateSampleImages() });
   }
 
+  photoExpanded(image) {
+    this.setState({ expandedPhoto: image });
+  }
+
+  expandedClosed() {
+    this.setState({ expandedPhoto: null });
+  }
+
   render() {
     const { images, expandedPhoto } = this.state;
     if (images === null) {
@@ -43,13 +51,13 @@ export default class Gallery extends React.Component {
             <Photo
               key={`photo-${key}`}
               {...image}
-              onClick={() => this.setState({ expandedPhoto: image })}
+              onClick={() => this.photoExpanded(image)}
             />
           ))}
           {expandedPhoto && (
             <ExpandedPhoto
               {...expandedPhoto}
-              onClick={() => this.setState({ expandedPhoto: null })}
+              onClick={() => this.expandedClosed()}
             />
           )}
         </div>
