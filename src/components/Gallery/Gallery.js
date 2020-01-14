@@ -13,13 +13,32 @@ const SAMPLE_NOTES = [
   ["quis nostrud", "exercitation"]
 ];
 
+const SAMPLE_COMMENTS = [
+  { text: "Lorem ipsum dolor sit amet", author: "Sandy" },
+  {
+    text:
+      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    author: "Richard"
+  },
+  { text: "Ut enim ad minim veniam.", author: "Daisy" },
+  {
+    text:
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    author: "Pedro"
+  }
+];
+
 function generateSampleImages() {
   const SAMPLE_IMAGES = [];
   for (let i = 0; i < 10; i++) {
     SAMPLE_IMAGES.push({
-      url: `https://picsum.photos/200`,
+      url: `https://picsum.photos/300/200`,
       rotation: Math.floor(Math.random() * 16 - 8),
-      note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)]
+      note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)],
+      comments: SAMPLE_COMMENTS.slice(
+        0,
+        Math.floor(Math.random() * SAMPLE_COMMENTS.length)
+      )
     });
   }
   return SAMPLE_IMAGES;
