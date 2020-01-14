@@ -26,6 +26,8 @@
   height: 150px;
   margin: 10px auto 0 auto;
   display: block;
+  object-fit: cover;
+  border: 1px #f6f6f6 solid;
 }
 
 .photo-container .note,

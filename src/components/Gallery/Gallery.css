@@ -20,8 +20,8 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   filter: drop-shadow(1px 1px grey);
-  transition: transform 100ms ease-in-out;
-  transition: filter 50ms;
+  transition: transform 50ms ease-in-out;
+  transition: filter 25ms;
 }
 
 .add-button.hovering {
