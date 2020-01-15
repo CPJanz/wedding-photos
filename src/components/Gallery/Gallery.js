@@ -28,9 +28,14 @@ const SAMPLE_COMMENTS = [
   }
 ];
 
+let REMAINING_PHOTOS = 10;
+const PHOTOS_SHOWN = 5;
+
+//TODO: This should be replaced with an api call to fetch images
 function generateSampleImages() {
   const SAMPLE_IMAGES = [];
-  for (let i = 0; i < 10; i++) {
+  const returnedPhotos = Math.min(REMAINING_PHOTOS, PHOTOS_SHOWN);
+  for (let i = 0; i < returnedPhotos; i++) {
     SAMPLE_IMAGES.push({
       url: `https://picsum.photos/300/200`,
       rotation: Math.floor(Math.random() * 16 - 8),
@@ -40,7 +45,9 @@ function generateSampleImages() {
         Math.floor(Math.random() * SAMPLE_COMMENTS.length)
       )
     });
+    REMAINING_PHOTOS--;
   }
+  console.log("Photos remaining:", REMAINING_PHOTOS);
   return SAMPLE_IMAGES;
 }
 
@@ -49,31 +56,50 @@ export default class Gallery extends React.Component {
     images: null,
     expandedPhoto: null,
     addHover: "",
-    hoverClicked: false
+    hoverClicked: false,
+    fetchHover: "",
+    foundNewPhotos: true
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({ images: generateSampleImages() });
-  }
+  };
 
-  photoExpanded(image) {
+  photoExpanded = image => {
     this.setState({ expandedPhoto: image });
-  }
+  };
 
-  expandedClosed() {
+  expandedClosed = () => {
     this.setState({ expandedPhoto: null });
-  }
+  };
 
-  addClicked() {
+  addClicked = () => {
     this.setState({ hoverClicked: true });
-  }
+  };
 
-  addClosed() {
+  addClosed = () => {
     this.setState({ hoverClicked: false });
-  }
+  };
+
+  fetchNewPhotos = () => {
+    const newPhotos = generateSampleImages();
+    this.setState(state => {
+      return {
+        images: state.images.concat(newPhotos),
+        foundNewPhotos: newPhotos.length > 0 ? true : false
+      };
+    });
+  };
 
   render() {
-    const { images, expandedPhoto, addHover, hoverClicked } = this.state;
+    const {
+      images,
+      expandedPhoto,
+      addHover,
+      hoverClicked,
+      fetchHover,
+      foundNewPhotos
+    } = this.state;
     return (
       <React.Fragment>
         {images === null ? (
@@ -95,6 +121,20 @@ export default class Gallery extends React.Component {
                 onClick={() => this.photoExpanded(image)}
               />
             ))}
+            {foundNewPhotos && (
+              <div
+                className={`more-imgs-btn ${fetchHover}`}
+                onMouseOver={() => {
+                  this.setState({ fetchHover: "hovering" });
+                }}
+                onMouseOut={() => {
+                  this.setState({ fetchHover: "" });
+                }}
+                onClick={this.fetchNewPhotos}
+              >
+                ...
+              </div>
+            )}
             {expandedPhoto && (
               <ExpandedPhoto
                 {...expandedPhoto}
