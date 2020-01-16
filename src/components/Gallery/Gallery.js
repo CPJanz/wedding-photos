@@ -3,6 +3,7 @@ import Photo from "../Photo/Photo";
 import Loading from "../Loading/Loading";
 import ExpandedPhoto from "../ExpandedPhoto/ExpandedPhoto";
 import Scrim from "../Scrim/Scrim";
+import NewPhotoForm from "../NewPhotoForm/NewPhotoForm";
 import { FaPlusSquare, FaRegTimesCircle } from "react-icons/fa";
 import "./Gallery.css";
 
@@ -56,7 +57,7 @@ export default class Gallery extends React.Component {
     images: null,
     expandedPhoto: null,
     addHover: "",
-    hoverClicked: false,
+    addClicked: false,
     fetchHover: "",
     foundNewPhotos: true
   };
@@ -74,11 +75,11 @@ export default class Gallery extends React.Component {
   };
 
   addClicked = () => {
-    this.setState({ hoverClicked: true });
+    this.setState({ addClicked: true });
   };
 
   addClosed = () => {
-    this.setState({ hoverClicked: false });
+    this.setState({ addClicked: false });
   };
 
   fetchNewPhotos = () => {
@@ -91,15 +92,30 @@ export default class Gallery extends React.Component {
     });
   };
 
+  submitNewPhoto = photo => {
+    console.log("TODO: Integrate this with the photo storage api.");
+    console.log(photo);
+    photo.comments = [];
+    photo.rotation = 1;
+    //TODO: change the note schema
+    photo.note = [photo.note];
+    this.setState(state => {
+      return { images: state.images.concat(photo) };
+    });
+  };
+
   render() {
     const {
       images,
       expandedPhoto,
       addHover,
-      hoverClicked,
+      addClicked,
       fetchHover,
       foundNewPhotos
     } = this.state;
+    images !== null
+      ? console.log(images.length)
+      : console.log("empty images array");
     return (
       <React.Fragment>
         {images === null ? (
@@ -141,9 +157,12 @@ export default class Gallery extends React.Component {
                 onClick={() => this.expandedClosed()}
               />
             )}
-            {hoverClicked && (
+            {addClicked && (
               <Scrim>
-                {<FaRegTimesCircle onClick={() => this.addClosed()} />}
+                <NewPhotoForm
+                  close={this.addClosed}
+                  submit={this.submitNewPhoto}
+                />
               </Scrim>
             )}
           </div>
