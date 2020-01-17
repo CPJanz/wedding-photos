@@ -4,7 +4,7 @@ import Loading from "../Loading/Loading";
 import ExpandedPhoto from "../ExpandedPhoto/ExpandedPhoto";
 import Scrim from "../Scrim/Scrim";
 import NewPhotoForm from "../NewPhotoForm/NewPhotoForm";
-import { FaPlusSquare, FaRegTimesCircle } from "react-icons/fa";
+import { FaPlusSquare } from "react-icons/fa";
 import "./Gallery.css";
 
 const SAMPLE_NOTES = [

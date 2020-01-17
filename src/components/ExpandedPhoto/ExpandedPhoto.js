@@ -27,13 +27,15 @@ export default class ExpandedPhoto extends React.Component {
     return (
       <Scrim>
         <div className="expanded-photo-container">
-          <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
-          <p>{note.join(" ")}</p>
-          {comments.map((comment, key) => Comment(comment, key))}
-          <CommentInput handleSubmit={result => this.addComment(result)} />
-          <span onClick={onClick}>
-            <FaRegTimesCircle />
-          </span>
+          <FaRegTimesCircle className="close-button" onClick={onClick} />
+          <div className="expanded-photo-photo">
+            <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
+            <p>{note.join(" ")}</p>
+          </div>
+          <div className="expanded-photo-comments">
+            {comments.map((comment, key) => Comment(comment, key))}
+            <CommentInput handleSubmit={result => this.addComment(result)} />
+          </div>
         </div>
       </Scrim>
     );
