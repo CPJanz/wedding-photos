@@ -8,10 +8,12 @@ import { FaPlusSquare } from "react-icons/fa";
 import "./Gallery.css";
 
 const SAMPLE_NOTES = [
-  ["Lorem ipsum"],
-  ["dolor sit amet", "consectetur adipiscing"],
-  ["sed do eiusmod"],
-  ["quis nostrud", "exercitation"]
+  "Lorem ipsum",
+  "dolor sit amet",
+  "consectetur",
+  "sed do eiusmod",
+  "quis nostrud",
+  "exercitation"
 ];
 
 const SAMPLE_COMMENTS = [
@@ -97,8 +99,6 @@ export default class Gallery extends React.Component {
     console.log(photo);
     photo.comments = [];
     photo.rotation = 1;
-    //TODO: change the note schema
-    photo.note = [photo.note];
     this.setState(state => {
       return { images: state.images.concat(photo) };
     });

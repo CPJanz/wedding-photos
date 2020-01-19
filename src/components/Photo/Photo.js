@@ -32,17 +32,8 @@ export default class Photo extends React.Component {
           onMouseOut={this.mouseOut}
           onClick={onClick}
         >
-          <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
-          {note.map((line, index) => {
-            return (
-              <p
-                className={note.length > 1 ? "long-note" : "note"}
-                key={`${url}-${index}`}
-              >
-                {line}
-              </p>
-            );
-          })}
+          <img src={url} alt={"TODO: SOMETHING NEEDS TO BE HERE"} />
+          <p className={"note"}>{note}</p>
         </div>
       </div>
     );

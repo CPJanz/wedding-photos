@@ -11,6 +11,7 @@ export default class NewPhotoForm extends React.Component {
   render() {
     const { close, submit } = this.props;
     const { newPhoto } = this.state;
+    const noteAtMaxLength = newPhoto.note.length >= 12;
     return (
       <div className="new-photo-container">
         <FaRegTimesCircle className="close-button" onClick={() => close()} />
@@ -32,15 +33,21 @@ export default class NewPhotoForm extends React.Component {
               className="input note-input"
               auto="off"
               value={newPhoto.note}
-              onChange={event =>
+              onChange={event => {
+                const trimmedValue = event.target.value.slice(0, 12);
                 this.setState({
                   newPhoto: {
-                    note: event.target.value,
+                    note: trimmedValue,
                     url: this.state.newPhoto.url
                   }
-                })
-              }
+                });
+              }}
             />
+            <span
+              className={`length-note ${noteAtMaxLength ? "max-length" : ""}`}
+            >
+              {newPhoto.note.length}/12
+            </span>
             <button
               className="btn"
               type="submit"
