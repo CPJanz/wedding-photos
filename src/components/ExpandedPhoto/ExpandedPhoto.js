@@ -30,7 +30,7 @@ export default class ExpandedPhoto extends React.Component {
           <FaRegTimesCircle className="close-button" onClick={onClick} />
           <div className="expanded-photo-photo">
             <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
-            <p>{note.join(" ")}</p>
+            <p>{note}</p>
           </div>
           <div className="expanded-photo-comments">
             {comments.map((comment, key) => Comment(comment, key))}
