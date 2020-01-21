@@ -1,21 +1,35 @@
 import * as firebase from "firebase";
+import uuid from "uuid";
 
-var storage = firebase.storage();
-var pathReference = storage.ref("samplePicture.jpg");
-pathReference
-  .getDownloadURL()
-  .then(function(url) {
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = "blob";
-    xhr.onload = function(event) {
-      var blob = xhr.response;
-    };
-    xhr.open("GET", url);
-    xhr.send();
+export default {
+  uploadImage: async uri => {
+    // generates a random image ID for firebase
+    let imageID = uuid.v4() + ".jpg";
+    // creates a blob (binary image format)
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(JSON.stringify(e));
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
 
-    // Or inserted into an <img> element:
-    console.log(url);
-  })
-  .catch(function(error) {
-    // Handle any errors
-  });
+    // creates a reference based off of the generated image ID
+    let ref = firebase
+      .storage()
+      .ref()
+      .child(imageID);
+    // sends the blob to firebase
+    let snapshot = await ref.put(blob, { contentType: "image/jpg" });
+    // finalizes the uploaded blob
+    // blob.close();
+    // returns the URL of the uploaded image
+    return await snapshot.ref.getDownloadURL();
+  }
+};

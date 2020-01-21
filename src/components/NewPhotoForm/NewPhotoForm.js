@@ -2,11 +2,9 @@ import React from "react";
 import "./NewPhotoForm.css";
 import { FaRegTimesCircle, FaFileUpload } from "react-icons/fa";
 
-const SAMPLE_IMAGE = `https://firebasestorage.googleapis.com/v0/b/wedding-photos-1eb06.appspot.com/o/samplePicture.jpg?alt=media&token=691e418a-3b6e-44c1-ba36-59bc01f4f553`;
-
 export default class NewPhotoForm extends React.Component {
   //TODO: Change starting url to something else once photo upload has been added.
-  state = { newPhoto: { url: SAMPLE_IMAGE, note: "" } };
+  state = { newPhoto: { url: "", note: "" } };
 
   render() {
     const { close, submit } = this.props;
@@ -27,6 +25,19 @@ export default class NewPhotoForm extends React.Component {
               close();
             }}
           >
+            {newPhoto.url && <img src={newPhoto.url} alt="Upload preview" />}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={event =>
+                this.setState({
+                  newPhoto: {
+                    note: newPhoto.note,
+                    url: URL.createObjectURL(event.target.files[0])
+                  }
+                })
+              }
+            />
             <input
               type="text"
               id="comment"

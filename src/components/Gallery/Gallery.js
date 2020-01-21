@@ -5,6 +5,7 @@ import ExpandedPhoto from "../ExpandedPhoto/ExpandedPhoto";
 import Scrim from "../Scrim/Scrim";
 import NewPhotoForm from "../NewPhotoForm/NewPhotoForm";
 import { FaPlusSquare } from "react-icons/fa";
+import firebase from "../../utils/firebase";
 import "./Gallery.css";
 
 const SAMPLE_NOTES = [
@@ -34,6 +35,8 @@ const SAMPLE_COMMENTS = [
 let REMAINING_PHOTOS = 10;
 const PHOTOS_SHOWN = 5;
 
+const rotateImage = () => Math.floor(Math.random() * 16 - 8);
+
 //TODO: This should be replaced with an api call to fetch images
 function generateSampleImages() {
   const SAMPLE_IMAGES = [];
@@ -41,7 +44,7 @@ function generateSampleImages() {
   for (let i = 0; i < returnedPhotos; i++) {
     SAMPLE_IMAGES.push({
       url: `https://picsum.photos/300/200`,
-      rotation: Math.floor(Math.random() * 16 - 8),
+      rotation: rotateImage(),
       note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)],
       comments: SAMPLE_COMMENTS.slice(
         0,
@@ -95,13 +98,16 @@ export default class Gallery extends React.Component {
   };
 
   submitNewPhoto = photo => {
-    console.log("TODO: Integrate this with the photo storage api.");
-    console.log(photo);
     photo.comments = [];
-    photo.rotation = 1;
-    this.setState(state => {
-      return { images: state.images.concat(photo) };
-    });
+    photo.rotation = rotateImage();
+    firebase
+      .uploadImage(photo.url)
+      .then(result => (photo.url = result))
+      .then(() =>
+        this.setState(state => {
+          return { images: state.images.concat(photo) };
+        })
+      );
   };
 
   render() {
@@ -113,9 +119,6 @@ export default class Gallery extends React.Component {
       fetchHover,
       foundNewPhotos
     } = this.state;
-    images !== null
-      ? console.log(images.length)
-      : console.log("empty images array");
     return (
       <React.Fragment>
         {images === null ? (
