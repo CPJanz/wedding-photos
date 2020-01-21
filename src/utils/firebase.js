@@ -27,8 +27,7 @@ export default {
       .child(imageID);
     // sends the blob to firebase
     let snapshot = await ref.put(blob, { contentType: "image/jpg" });
-    // finalizes the uploaded blob
-    // blob.close();
+
     // returns the URL of the uploaded image
     return await snapshot.ref.getDownloadURL();
   }
