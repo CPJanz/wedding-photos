@@ -2,8 +2,8 @@ import React from "react";
 import "./ExpandedPhoto.css";
 import { FaRegTimesCircle } from "react-icons/fa";
 import Scrim from "../Scrim/Scrim";
-import Comment from "../Comment/Comment";
-import CommentInput from "../CommentInput/CommentInput";
+import Comment from "../Comment";
+import CommentInput from "../CommentInput";
 
 export default class ExpandedPhoto extends React.Component {
   state = {

@@ -1,16 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import "./Nav.css";
+
+const Nav = styled.nav`
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+`;
 
 export default function(props) {
   return (
-    <nav>
+    <Nav>
       {props.children}
       <ul>
         <NavLink to="/" className="nav-link" exact>
           Gallery
         </NavLink>
       </ul>
-    </nav>
+    </Nav>
   );
 }
