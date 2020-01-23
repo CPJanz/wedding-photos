@@ -1,9 +1,36 @@
 import React from "react";
-import "./ExpandedPhoto.css";
+import styled from "styled-components";
 import { FaRegTimesCircle } from "react-icons/fa";
 import Scrim from "../Scrim/Scrim";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 1px black solid;
+  display: grid;
+  padding: 20px;
+`;
+const CloseButton = styled.div`
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 25px;
+`;
+const PhotoSection = styled.div`
+  grid-column-start: 1;
+  grid-column-end: 6;
+`;
+
+const CommentSection = styled.div`
+  grid-column-start: 7;
+  grid-column-end: 12;
+`;
 
 export default class ExpandedPhoto extends React.Component {
   state = {
@@ -26,17 +53,19 @@ export default class ExpandedPhoto extends React.Component {
     const { comments } = this.state;
     return (
       <Scrim>
-        <div className="expanded-photo-container">
-          <FaRegTimesCircle className="close-button" onClick={onClick} />
-          <div className="expanded-photo-photo">
+        <Wrapper>
+          <CloseButton onClick={onClick}>
+            <FaRegTimesCircle />
+          </CloseButton>
+          <PhotoSection>
             <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
             <p>{note}</p>
-          </div>
-          <div className="expanded-photo-comments">
+          </PhotoSection>
+          <CommentSection>
             {comments.map((comment, key) => Comment(comment, key))}
             <CommentInput handleSubmit={result => this.addComment(result)} />
-          </div>
-        </div>
+          </CommentSection>
+        </Wrapper>
       </Scrim>
     );
   }

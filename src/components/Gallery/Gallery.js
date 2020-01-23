@@ -1,12 +1,12 @@
 import React from "react";
 import Photo from "../Photo/Photo";
 import Loading from "../Loading/Loading";
-import ExpandedPhoto from "../ExpandedPhoto/ExpandedPhoto";
+import ExpandedPhoto from "../ExpandedPhoto";
 import Scrim from "../Scrim/Scrim";
 import NewPhotoForm from "../NewPhotoForm/NewPhotoForm";
-import { FaPlusSquare } from "react-icons/fa";
 import firebase from "../../utils/firebase";
-import "./Gallery.css";
+import styled from "styled-components";
+import AddPhotoButton from "../AddPhotoButton";
 
 const SAMPLE_NOTES = [
   "Lorem ipsum",
@@ -35,6 +35,12 @@ const SAMPLE_COMMENTS = [
 let REMAINING_PHOTOS = 10;
 const PHOTOS_SHOWN = 5;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+`;
+
 const rotateImage = () => Math.floor(Math.random() * 16 - 8);
 
 //TODO: This should be replaced with an api call to fetch images
@@ -61,7 +67,6 @@ export default class Gallery extends React.Component {
   state = {
     images: null,
     expandedPhoto: null,
-    addHover: "",
     addClicked: false,
     fetchHover: "",
     foundNewPhotos: true
@@ -114,7 +119,6 @@ export default class Gallery extends React.Component {
     const {
       images,
       expandedPhoto,
-      addHover,
       addClicked,
       fetchHover,
       foundNewPhotos
@@ -124,15 +128,8 @@ export default class Gallery extends React.Component {
         {images === null ? (
           <Loading text="Fetching Photos" />
         ) : (
-          <div className="grid">
-            <div className="add-div">
-              <FaPlusSquare
-                className={`add-button ${addHover}`}
-                onMouseOver={() => this.setState({ addHover: "hovering" })}
-                onMouseOut={() => this.setState({ addHover: "" })}
-                onClick={() => this.addClicked()}
-              />
-            </div>
+          <Wrapper>
+            <AddPhotoButton click={this.addClicked} />
             {images.map((image, key) => (
               <Photo
                 key={`photo-${key}`}
@@ -168,7 +165,7 @@ export default class Gallery extends React.Component {
                 />
               </Scrim>
             )}
-          </div>
+          </Wrapper>
         )}
       </React.Fragment>
     );
