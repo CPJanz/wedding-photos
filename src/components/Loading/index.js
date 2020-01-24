@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
-const styles = {
-  content: {
-    fontSize: "35px",
-    position: "absolute",
-    left: "0",
-    right: "0",
-    marginTop: "20px",
-    textAlign: "center"
-  }
-};
+const Wrapper = styled.p`
+  font-size: 35px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 20px;
+  text-align: center;
+`;
 
 export default class Loading extends React.Component {
   state = { content: this.props.text };
@@ -39,6 +38,6 @@ export default class Loading extends React.Component {
   }
 
   render() {
-    return <p style={styles.content}>{this.state.content}</p>;
+    return <Wrapper>{this.state.content}</Wrapper>;
   }
 }

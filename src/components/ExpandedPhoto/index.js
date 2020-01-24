@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FaRegTimesCircle } from "react-icons/fa";
-import Scrim from "../Scrim/Scrim";
+import Scrim from "../Scrim";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
 
@@ -49,12 +49,12 @@ export default class ExpandedPhoto extends React.Component {
   };
 
   render() {
-    const { url, note, onClick } = this.props;
+    const { url, note, close } = this.props;
     const { comments } = this.state;
     return (
       <Scrim>
         <Wrapper>
-          <CloseButton onClick={onClick}>
+          <CloseButton onClick={close}>
             <FaRegTimesCircle />
           </CloseButton>
           <PhotoSection>

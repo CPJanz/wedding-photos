@@ -1,12 +1,12 @@
 import React from "react";
-import Photo from "../Photo/Photo";
-import Loading from "../Loading/Loading";
+import Photo from "../Photo";
+import Loading from "../Loading";
 import ExpandedPhoto from "../ExpandedPhoto";
-import Scrim from "../Scrim/Scrim";
-import NewPhotoForm from "../NewPhotoForm/NewPhotoForm";
+import NewPhotoForm from "../NewPhotoForm";
 import firebase from "../../utils/firebase";
 import styled from "styled-components";
 import AddPhotoButton from "../AddPhotoButton";
+import FetchPhotoButton from "../FetchPhotoButton";
 
 const SAMPLE_NOTES = [
   "Lorem ipsum",
@@ -68,28 +68,11 @@ export default class Gallery extends React.Component {
     images: null,
     expandedPhoto: null,
     addClicked: false,
-    fetchHover: "",
     foundNewPhotos: true
   };
 
   componentDidMount = () => {
     this.setState({ images: generateSampleImages() });
-  };
-
-  photoExpanded = image => {
-    this.setState({ expandedPhoto: image });
-  };
-
-  expandedClosed = () => {
-    this.setState({ expandedPhoto: null });
-  };
-
-  addClicked = () => {
-    this.setState({ addClicked: true });
-  };
-
-  addClosed = () => {
-    this.setState({ addClicked: false });
   };
 
   fetchNewPhotos = () => {
@@ -115,55 +98,44 @@ export default class Gallery extends React.Component {
       );
   };
 
+  closeScrim = target => {
+    const stateObj = {};
+    stateObj[target] = false;
+    this.setState(stateObj);
+  };
+
   render() {
-    const {
-      images,
-      expandedPhoto,
-      addClicked,
-      fetchHover,
-      foundNewPhotos
-    } = this.state;
+    const { images, expandedPhoto, addClicked, foundNewPhotos } = this.state;
     return (
       <React.Fragment>
         {images === null ? (
           <Loading text="Fetching Photos" />
         ) : (
           <Wrapper>
-            <AddPhotoButton click={this.addClicked} />
+            <AddPhotoButton
+              click={() => {
+                this.setState({ addClicked: true });
+              }}
+            />
             {images.map((image, key) => (
               <Photo
                 key={`photo-${key}`}
                 {...image}
-                onClick={() => this.photoExpanded(image)}
+                click={() => this.setState({ expandedPhoto: image })}
               />
             ))}
-            {foundNewPhotos && (
-              <div
-                className={`more-imgs-btn ${fetchHover}`}
-                onMouseOver={() => {
-                  this.setState({ fetchHover: "hovering" });
-                }}
-                onMouseOut={() => {
-                  this.setState({ fetchHover: "" });
-                }}
-                onClick={this.fetchNewPhotos}
-              >
-                ...
-              </div>
-            )}
+            {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />}
             {expandedPhoto && (
               <ExpandedPhoto
                 {...expandedPhoto}
-                onClick={() => this.expandedClosed()}
+                close={() => this.closeScrim("expandedPhoto")}
               />
             )}
             {addClicked && (
-              <Scrim>
-                <NewPhotoForm
-                  close={this.addClosed}
-                  submit={this.submitNewPhoto}
-                />
-              </Scrim>
+              <NewPhotoForm
+                close={() => this.closeScrim("addClicked")}
+                submit={this.submitNewPhoto}
+              />
             )}
           </Wrapper>
         )}

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Gallery from "../Gallery/Gallery";
-import Loading from "../Loading/Loading";
+import Gallery from "../Gallery";
+import Loading from "../Loading";
 import Nav from "../Nav";
 import "./App.css";
 
