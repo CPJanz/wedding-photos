@@ -7,6 +7,7 @@ import firebase from "../../utils/firebase";
 import styled from "styled-components";
 import AddPhotoButton from "../AddPhotoButton";
 import FetchPhotoButton from "../FetchPhotoButton";
+import Popup from "reactjs-popup";
 
 const SAMPLE_NOTES = [
   "Lorem ipsum",
@@ -112,11 +113,7 @@ export default class Gallery extends React.Component {
           <Loading text="Fetching Photos" />
         ) : (
           <Wrapper>
-            <AddPhotoButton
-              click={() => {
-                this.setState({ addClicked: true });
-              }}
-            />
+            <AddPhotoButton submitNewPhoto={this.submitNewPhoto} />
             {images.map((image, key) => (
               <Photo
                 key={`photo-${key}`}
@@ -129,12 +126,6 @@ export default class Gallery extends React.Component {
               <ExpandedPhoto
                 {...expandedPhoto}
                 close={() => this.closeScrim("expandedPhoto")}
-              />
-            )}
-            {addClicked && (
-              <NewPhotoForm
-                close={() => this.closeScrim("addClicked")}
-                submit={this.submitNewPhoto}
               />
             )}
           </Wrapper>

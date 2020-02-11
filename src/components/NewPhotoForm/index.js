@@ -33,69 +33,62 @@ export default class NewPhotoForm extends React.Component {
   state = { newPhoto: { url: "", note: "" } };
 
   render() {
-    const { close, submit } = this.props;
+    const { submit } = this.props;
     const { newPhoto } = this.state;
     const noteAtMaxLength = newPhoto.note.length >= 12;
     return (
-      <Scrim>
-        <Wrapper>
-          <CloseButton onClick={close}>
-            <FaRegTimesCircle />
-          </CloseButton>
-
-          <div className="new-photo-upload-node">
-            <FaFileUpload />
-            <form
-              className=""
-              onSubmit={event => {
-                event.preventDefault();
-                submit(newPhoto);
-                close();
+      <Wrapper>
+        <div className="new-photo-upload-node">
+          <FaFileUpload />
+          <form
+            className=""
+            onSubmit={event => {
+              event.preventDefault();
+              submit(newPhoto);
+            }}
+          >
+            {newPhoto.url && <img src={newPhoto.url} alt="Upload preview" />}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={event =>
+                this.setState({
+                  newPhoto: {
+                    note: newPhoto.note,
+                    url: URL.createObjectURL(event.target.files[0])
+                  }
+                })
+              }
+            />
+            <input
+              type="text"
+              id="comment"
+              className="input note-input"
+              auto="off"
+              value={newPhoto.note}
+              onChange={event => {
+                const trimmedValue = event.target.value.slice(0, 12);
+                this.setState({
+                  newPhoto: {
+                    note: trimmedValue,
+                    url: this.state.newPhoto.url
+                  }
+                });
               }}
+            />
+            <LengthCounter className={`${noteAtMaxLength ? "max" : ""}`}>
+              {newPhoto.note.length}/12
+            </LengthCounter>
+            <button
+              className="btn"
+              type="submit"
+              disabled={newPhoto.url === ""}
             >
-              {newPhoto.url && <img src={newPhoto.url} alt="Upload preview" />}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={event =>
-                  this.setState({
-                    newPhoto: {
-                      note: newPhoto.note,
-                      url: URL.createObjectURL(event.target.files[0])
-                    }
-                  })
-                }
-              />
-              <input
-                type="text"
-                id="comment"
-                className="input note-input"
-                auto="off"
-                value={newPhoto.note}
-                onChange={event => {
-                  const trimmedValue = event.target.value.slice(0, 12);
-                  this.setState({
-                    newPhoto: {
-                      note: trimmedValue,
-                      url: this.state.newPhoto.url
-                    }
-                  });
-                }}
-              />
-              <LengthCounter className={`${noteAtMaxLength ? "max" : ""}`}>
-                {newPhoto.note.length}/12
-              </LengthCounter>
-              <button
-                className="btn"
-                type="submit"
-                disabled={newPhoto.url === ""}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-        </Wrapper>
-      </Scrim>
+              Submit
+            </button>
+          </form>
+        </div>
+      </Wrapper>
     );
   }
 }
