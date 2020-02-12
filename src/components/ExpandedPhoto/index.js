@@ -1,35 +1,32 @@
 import React from "react";
 import styled from "styled-components";
-import { FaRegTimesCircle } from "react-icons/fa";
-import Scrim from "../Scrim";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
 
 const Wrapper = styled.div`
-  margin: 0 auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  border: 1px black solid;
+  width: 100%;
+  height: 100%;
   display: grid;
-  padding: 20px;
+  grid-template-columns: "300px 600px";
+  grid-template-areas: "photo comments";
+
+  @media (max-width: 1000px) {
+    grid-template-columns: "100%";
+    grid=template-columns: inherit;
+    grid-template-rows: "400px 600px";
+    grid-template-areas: "photo" "comments";
+  }
 `;
-const CloseButton = styled.div`
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  font-size: 25px;
-`;
+
 const PhotoSection = styled.div`
-  grid-column-start: 1;
-  grid-column-end: 6;
+  grid-area: photo;
+  padding: 15px;
 `;
 
 const CommentSection = styled.div`
-  grid-column-start: 7;
-  grid-column-end: 12;
+  grid-area: comments;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 export default class ExpandedPhoto extends React.Component {
@@ -49,24 +46,19 @@ export default class ExpandedPhoto extends React.Component {
   };
 
   render() {
-    const { url, note, close } = this.props;
+    const { url, note } = this.props;
     const { comments } = this.state;
     return (
-      <Scrim>
-        <Wrapper>
-          <CloseButton onClick={close}>
-            <FaRegTimesCircle />
-          </CloseButton>
-          <PhotoSection>
-            <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
-            <p>{note}</p>
-          </PhotoSection>
-          <CommentSection>
-            {comments.map((comment, key) => Comment(comment, key))}
-            <CommentInput handleSubmit={result => this.addComment(result)} />
-          </CommentSection>
-        </Wrapper>
-      </Scrim>
+      <Wrapper>
+        <PhotoSection>
+          <img src={url} alt={"SOMETHING NEEDS TO BE HERE"} />
+          <p>{note}</p>
+        </PhotoSection>
+        <CommentSection>
+          {comments.map((comment, key) => Comment(comment, key))}
+          <CommentInput handleSubmit={result => this.addComment(result)} />
+        </CommentSection>
+      </Wrapper>
     );
   }
 }

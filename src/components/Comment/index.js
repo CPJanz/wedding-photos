@@ -3,14 +3,22 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 20px;
+  border: 1px black solid;
+  border-radius: 10px;
+  margin: 5px 0;
 `;
 
 const CommentText = styled.p`
   text-align: left;
+  font-size: 0.8em;
+  margin: 0;
 `;
 
 const Signator = styled.p`
   text-align: right;
+  font-size: 0.7em;
+  margin: 0;
+  font-style: italic;
 `;
 
 export default function Comment(comment, key) {

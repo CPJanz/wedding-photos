@@ -1,57 +1,22 @@
 import React from "react";
 import Photo from "../Photo";
 import Loading from "../Loading";
-import ExpandedPhoto from "../ExpandedPhoto";
-import NewPhotoForm from "../NewPhotoForm";
 import firebase from "../../utils/firebase";
 import styled from "styled-components";
 import AddPhotoButton from "../AddPhotoButton";
 import FetchPhotoButton from "../FetchPhotoButton";
-import Popup from "reactjs-popup";
 
-const SAMPLE_NOTES = [
-  "Lorem ipsum",
-  "dolor sit amet",
-  "consectetur",
-  "sed do eiusmod",
-  "quis nostrud",
-  "exercitation"
-];
-
-const SAMPLE_COMMENTS = [
-  { text: "Lorem ipsum dolor sit amet", author: "Sandy" },
-  {
-    text:
-      "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    author: "Richard"
-  },
-  { text: "Ut enim ad minim veniam.", author: "Daisy" },
-  {
-    text:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Pedro"
-  }
-];
-
+// ----------------------------------------------- Temporary data. remove once backend is set up
+import TEMPDATA from "../../utils/tempData";
+const { SAMPLE_NOTES, SAMPLE_COMMENTS } = TEMPDATA;
 let REMAINING_PHOTOS = 10;
-const PHOTOS_SHOWN = 5;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-`;
-
-const rotateImage = () => Math.floor(Math.random() * 16 - 8);
-
-//TODO: This should be replaced with an api call to fetch images
 function generateSampleImages() {
   const SAMPLE_IMAGES = [];
   const returnedPhotos = Math.min(REMAINING_PHOTOS, PHOTOS_SHOWN);
   for (let i = 0; i < returnedPhotos; i++) {
     SAMPLE_IMAGES.push({
-      url: `https://picsum.photos/300/200`,
-      rotation: rotateImage(),
+      url: `https://picsum.photos/600/400`,
       note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)],
       comments: SAMPLE_COMMENTS.slice(
         0,
@@ -63,12 +28,21 @@ function generateSampleImages() {
   console.log("Photos remaining:", REMAINING_PHOTOS);
   return SAMPLE_IMAGES;
 }
+// ------------------------------------------------------------ End of temporary data
+
+const PHOTOS_SHOWN = 5;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+`;
+
+//TODO: This should be replaced with an api call to fetch images
 
 export default class Gallery extends React.Component {
   state = {
     images: null,
-    expandedPhoto: null,
-    addClicked: false,
     foundNewPhotos: true
   };
 
@@ -86,27 +60,16 @@ export default class Gallery extends React.Component {
     });
   };
 
-  submitNewPhoto = photo => {
+  submitNewPhoto = async photo => {
     photo.comments = [];
-    photo.rotation = rotateImage();
-    firebase
-      .uploadImage(photo.url)
-      .then(result => (photo.url = result))
-      .then(() =>
-        this.setState(state => {
-          return { images: state.images.concat(photo) };
-        })
-      );
-  };
-
-  closeScrim = target => {
-    const stateObj = {};
-    stateObj[target] = false;
-    this.setState(stateObj);
+    photo.url = await firebase.uploadImage(photo.url);
+    this.setState(state => {
+      return { images: state.images.concat(photo) };
+    });
   };
 
   render() {
-    const { images, expandedPhoto, addClicked, foundNewPhotos } = this.state;
+    const { images, foundNewPhotos } = this.state;
     return (
       <React.Fragment>
         {images === null ? (
@@ -114,20 +77,10 @@ export default class Gallery extends React.Component {
         ) : (
           <Wrapper>
             <AddPhotoButton submitNewPhoto={this.submitNewPhoto} />
-            {images.map((image, key) => (
-              <Photo
-                key={`photo-${key}`}
-                {...image}
-                click={() => this.setState({ expandedPhoto: image })}
-              />
+            {images.map((image, index) => (
+              <Photo key={index} {...image} />
             ))}
             {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />}
-            {expandedPhoto && (
-              <ExpandedPhoto
-                {...expandedPhoto}
-                close={() => this.closeScrim("expandedPhoto")}
-              />
-            )}
           </Wrapper>
         )}
       </React.Fragment>

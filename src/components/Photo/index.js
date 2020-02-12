@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Popup from "reactjs-popup";
+import ExpandedPhoto from "../ExpandedPhoto";
 
 const Wrapper = styled.div`
   @import url("https://fonts.googleapis.com/css?family=Indie+Flower&display=swap");
@@ -39,22 +41,35 @@ const PhotoNote = styled.p`
   font-size: 20px;
 `;
 
-const MAX_ROTATION = 20;
+const MAX_ROTATION = 10;
 
 export default class Photo extends React.Component {
   state = {
-    rotation: Math.floor(Math.random() * MAX_ROTATION - MAX_ROTATION / 2)
+    rotation: Math.floor(Math.random() * MAX_ROTATION * 2 - MAX_ROTATION)
   };
 
   render() {
-    const { url, note, click } = this.props;
+    const { url, note } = this.props;
     const { rotation } = this.state;
 
     return (
-      <Wrapper rotation={rotation} onClick={click}>
-        <PhotoImage src={url} alt={"TODO: SOMETHING NEEDS TO BE HERE"} />
-        <PhotoNote>{note}</PhotoNote>
-      </Wrapper>
+      <Popup
+        id="thisOne"
+        trigger={
+          <Wrapper rotation={rotation}>
+            <PhotoImage src={url} alt={"TODO: SOMETHING NEEDS TO BE HERE"} />
+            <PhotoNote>{note}</PhotoNote>
+          </Wrapper>
+        }
+        modal
+        closeOnDocumentClick
+        contentStyle={{
+          width: "80%",
+          maxHeight: "90%"
+        }}
+      >
+        <ExpandedPhoto {...this.props} />
+      </Popup>
     );
   }
 }
