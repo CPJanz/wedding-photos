@@ -65,7 +65,8 @@ export default class Photo extends React.Component {
         closeOnDocumentClick
         contentStyle={{
           width: "80%",
-          maxHeight: "90%"
+          height: "550px",
+          overflow: "hidden"
         }}
       >
         <ExpandedPhoto {...this.props} />

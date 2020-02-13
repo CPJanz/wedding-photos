@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaRegTimesCircle, FaFileUpload } from "react-icons/fa";
-import Scrim from "../Scrim";
+import { FaFileUpload } from "react-icons/fa";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -13,13 +12,6 @@ const Wrapper = styled.div`
   border: 1px black solid;
   display: grid;
   padding: 20px;
-`;
-
-const CloseButton = styled.div`
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  font-size: 25px;
 `;
 
 const LengthCounter = styled.span`

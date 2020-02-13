@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: "300px 600px";
+  grid-template-columns: "6fr 6fr";
   grid-template-areas: "photo comments";
 
   @media (max-width: 1000px) {
@@ -15,17 +15,24 @@ const Wrapper = styled.div`
     grid=template-columns: inherit;
     grid-template-rows: "400px 600px";
     grid-template-areas: "photo" "comments";
+    overflow-y: scroll;
+    padding: 0;
   }
 `;
 
 const PhotoSection = styled.div`
   grid-area: photo;
   padding: 15px;
+  @media (max-width: 1000px) {
+    & img {
+      width: 100%;
+    }
+    padding: 0;
+  }
 `;
 
 const CommentSection = styled.div`
   grid-area: comments;
-  height: 100%;
   overflow-y: scroll;
 `;
 
