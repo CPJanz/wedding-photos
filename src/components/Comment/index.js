@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   padding: 20px;
-  border: 1px black solid;
+  border: 1px lightblue solid;
   border-radius: 10px;
-  margin: 5px 0;
+  margin: 5px auto;
+  max-width: 280px;
 `;
 
 const CommentText = styled.p`

@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 `;
 
 const PhotoSection = styled.div`
+  @import url("https://fonts.googleapis.com/css?family=Indie+Flower&display=swap");
   grid-area: photo;
   padding: 15px;
   @media (max-width: 1000px) {
@@ -29,11 +30,19 @@ const PhotoSection = styled.div`
     }
     padding: 0;
   }
+
+  & p {
+    font-size: 3rem;
+    margin: 0;
+    font-family: "Indie Flower", cursive;
+    line-height: 7rem;
+  }
 `;
 
 const CommentSection = styled.div`
   grid-area: comments;
   overflow-y: scroll;
+  padding-top: 15px;
 `;
 
 export default class ExpandedPhoto extends React.Component {

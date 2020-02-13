@@ -8,6 +8,7 @@ body {
   background: url("/moritz-neuhaus-UpkfTmvqMXM-unsplash.jpg") lightblue;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 code {

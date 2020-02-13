@@ -10,13 +10,14 @@ import FetchPhotoButton from "../FetchPhotoButton";
 import TEMPDATA from "../../utils/tempData";
 const { SAMPLE_NOTES, SAMPLE_COMMENTS } = TEMPDATA;
 let REMAINING_PHOTOS = 10;
+const PHOTOS_SHOWN = 10;
 
 function generateSampleImages() {
   const SAMPLE_IMAGES = [];
   const returnedPhotos = Math.min(REMAINING_PHOTOS, PHOTOS_SHOWN);
   for (let i = 0; i < returnedPhotos; i++) {
     SAMPLE_IMAGES.push({
-      url: `https://picsum.photos/600/400`,
+      url: `https://picsum.photos/600/400?random=${i}`,
       note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)],
       comments: SAMPLE_COMMENTS.slice(
         0,
@@ -29,8 +30,6 @@ function generateSampleImages() {
   return SAMPLE_IMAGES;
 }
 // ------------------------------------------------------------ End of temporary data
-
-const PHOTOS_SHOWN = 5;
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,11 +75,11 @@ export default class Gallery extends React.Component {
           <Loading text="Fetching Photos" />
         ) : (
           <Wrapper>
-            <AddPhotoButton submitNewPhoto={this.submitNewPhoto} />
+            {/* <AddPhotoButton submitNewPhoto={this.submitNewPhoto} /> */}
             {images.map((image, index) => (
-              <Photo key={index} {...image} />
+              <Photo key={index} size={250} {...image} />
             ))}
-            {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />}
+            {/* {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />} */}
           </Wrapper>
         )}
       </React.Fragment>

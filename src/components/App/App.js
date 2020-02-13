@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="App">
         <Nav>
-          <h1>Welcome</h1>
+          <h1>CarrieAndTyler.us</h1>
         </Nav>
         <React.Suspense fallback={<Loading />}>
           <Switch>
