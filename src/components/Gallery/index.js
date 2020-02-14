@@ -17,7 +17,7 @@ function generateSampleImages() {
   const returnedPhotos = Math.min(REMAINING_PHOTOS, PHOTOS_SHOWN);
   for (let i = 0; i < returnedPhotos; i++) {
     SAMPLE_IMAGES.push({
-      url: `https://picsum.photos/600/400?random=${i}`,
+      url: `https://picsum.photos/600/400`,
       note: SAMPLE_NOTES[Math.floor(Math.random() * SAMPLE_NOTES.length)],
       comments: SAMPLE_COMMENTS.slice(
         0,
