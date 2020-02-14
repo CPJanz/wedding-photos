@@ -6,11 +6,17 @@ import Nav from "../Nav";
 import "./App.css";
 
 function App() {
+  console.log(window.screen.width);
+  console.log(window.screen.availWidth);
   return (
     <Router>
       <div className="App">
         <Nav>
-          <h1>CarrieAndTyler.us</h1>
+          {window.screen.width > 760 ? (
+            <h1>CarrieAndTyler.us</h1>
+          ) : (
+            <h1>C&T</h1>
+          )}
         </Nav>
         <React.Suspense fallback={<Loading />}>
           <Switch>

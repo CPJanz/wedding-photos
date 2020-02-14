@@ -4,6 +4,10 @@ body {
   height: 100%;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }

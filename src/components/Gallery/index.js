@@ -35,6 +35,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  width: 80%;
+  margin: 0 auto;
 `;
 
 //TODO: This should be replaced with an api call to fetch images
@@ -69,6 +71,7 @@ export default class Gallery extends React.Component {
 
   render() {
     const { images, foundNewPhotos } = this.state;
+    const screenWidth = window.screen.width;
     return (
       <React.Fragment>
         {images === null ? (
@@ -77,7 +80,11 @@ export default class Gallery extends React.Component {
           <Wrapper>
             {/* <AddPhotoButton submitNewPhoto={this.submitNewPhoto} /> */}
             {images.map((image, index) => (
-              <Photo key={index} size={250} {...image} />
+              <Photo
+                key={index}
+                size={screenWidth > 400 ? 250 : 150}
+                {...image}
+              />
             ))}
             {/* {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />} */}
           </Wrapper>

@@ -10,10 +10,10 @@ const Wrapper = styled.div`
   grid-template-columns: "6fr 6fr";
   grid-template-areas: "photo comments";
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1050px) {
     grid-template-columns: "100%";
-    grid=template-columns: inherit;
-    grid-template-rows: "400px 600px";
+    grid-template-columns: inherit;
+    grid-template-rows: "6fr 6fr";
     grid-template-areas: "photo" "comments";
     overflow-y: scroll;
     padding: 0;
@@ -24,9 +24,10 @@ const PhotoSection = styled.div`
   @import url("https://fonts.googleapis.com/css?family=Indie+Flower&display=swap");
   grid-area: photo;
   padding: 15px;
-  @media (max-width: 1000px) {
+  @media screen and (max-width: 1050px) {
     & img {
-      width: 100%;
+      max-width: 100%;
+      height: auto;
     }
     padding: 0;
   }
@@ -41,8 +42,12 @@ const PhotoSection = styled.div`
 
 const CommentSection = styled.div`
   grid-area: comments;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-top: 15px;
+
+  @media screen and (max-width: 1050px) {
+    overflow-y: visible;
+  }
 `;
 
 export default class ExpandedPhoto extends React.Component {

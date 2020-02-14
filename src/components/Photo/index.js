@@ -53,6 +53,7 @@ export default class Photo extends React.Component {
   render() {
     const { url, note, size = DEFAULT_PHOTO_SIZE } = this.props;
     const { rotation } = this.state;
+    const bodyElement = document.getElementsByTagName("body")[0];
     return (
       <Popup
         id="thisOne"
@@ -68,9 +69,12 @@ export default class Photo extends React.Component {
         }
         modal
         closeOnDocumentClick
+        onOpen={() => bodyElement.setAttribute("class", "no-scroll")}
+        onClose={() => bodyElement.removeAttribute("class")}
         contentStyle={{
           width: "80%",
-          height: "550px",
+          height: "70%",
+          minHeight: "550px",
           overflow: "hidden"
         }}
       >

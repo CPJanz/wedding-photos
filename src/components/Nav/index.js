@@ -35,17 +35,19 @@ export default function(props) {
     <Wrapper>
       <Nav>
         {props.children}
-        <NavList>
-          <StyledNavLink to="/" className="nav-link" exact>
-            Gallery
-          </StyledNavLink>
-          <StyledNavLink to="/" className="nav-link" exact>
-            Settings
-          </StyledNavLink>
-          <StyledNavLink to="/" className="nav-link" exact>
-            About
-          </StyledNavLink>
-        </NavList>
+        {window.screen.width > 760 && (
+          <NavList>
+            <StyledNavLink to="/" className="nav-link" exact>
+              Gallery
+            </StyledNavLink>
+            <StyledNavLink to="/" className="nav-link" exact>
+              Settings
+            </StyledNavLink>
+            <StyledNavLink to="/" className="nav-link" exact>
+              About
+            </StyledNavLink>
+          </NavList>
+        )}
       </Nav>
     </Wrapper>
   );
