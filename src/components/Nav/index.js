@@ -35,7 +35,8 @@ export default function(props) {
     <Wrapper>
       <Nav>
         {props.children}
-        {window.screen.width > 760 && (
+        {/* TODO: ADD THIS BACK IN ONCE MORE OF THE FLOW IS IN THERE */}
+        {/* {window.screen.width > 760 && (
           <NavList>
             <StyledNavLink to="/" className="nav-link" exact>
               Gallery
@@ -47,7 +48,7 @@ export default function(props) {
               About
             </StyledNavLink>
           </NavList>
-        )}
+        )} */}
       </Nav>
     </Wrapper>
   );

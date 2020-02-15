@@ -31,11 +31,13 @@ function generateSampleImages() {
 }
 // ------------------------------------------------------------ End of temporary data
 
+const MAX_ROTATION = 5;
+
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 `;
 
@@ -82,7 +84,8 @@ export default class Gallery extends React.Component {
             {images.map((image, index) => (
               <Photo
                 key={index}
-                size={screenWidth > 400 ? 250 : 150}
+                size={screenWidth > 400 ? 200 : 150}
+                maxRotation={MAX_ROTATION}
                 {...image}
               />
             ))}

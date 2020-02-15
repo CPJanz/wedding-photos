@@ -3,6 +3,10 @@ import styled from "styled-components";
 import Comment from "../Comment";
 import CommentInput from "../CommentInput";
 
+//TODO: TEMPORARY CONTENT REMOVE ONCE SERVER AND LOCAL STORAGE IS SET UP
+const user = "Carl";
+//END OF TEMPORARY CONTENT
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -77,7 +81,10 @@ export default class ExpandedPhoto extends React.Component {
         </PhotoSection>
         <CommentSection>
           {comments.map((comment, key) => Comment(comment, key))}
-          <CommentInput handleSubmit={result => this.addComment(result)} />
+          <CommentInput
+            author={user}
+            handleSubmit={result => this.addComment(result)}
+          />
         </CommentSection>
       </Wrapper>
     );

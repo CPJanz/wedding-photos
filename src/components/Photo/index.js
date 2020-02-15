@@ -4,7 +4,6 @@ import Popup from "reactjs-popup";
 import ExpandedPhoto from "../ExpandedPhoto";
 
 const DEFAULT_PHOTO_SIZE = 150;
-const MAX_ROTATION = 5;
 const BOX_SHADOW_COLOR = "rgba(0, 0, 0, 0.4)";
 
 const Wrapper = styled.div`
@@ -47,7 +46,10 @@ const PhotoNote = styled.p`
 
 export default class Photo extends React.Component {
   state = {
-    rotation: Math.floor(Math.random() * MAX_ROTATION * 2 - MAX_ROTATION)
+    rotation: Math.floor(
+      Math.random() * (this.props.maxRotation || 0) * 2 -
+        (this.props.maxRotation || 0)
+    )
   };
 
   render() {
