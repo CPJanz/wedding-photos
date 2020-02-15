@@ -22,11 +22,6 @@ const TextInput = styled.input.attrs(() => ({
     padding-left: 5px;
   }
 `;
-const AuthorInput = styled.input.attrs(() => ({
-  type: "text",
-  id: "author",
-  auto: "off"
-}))``;
 const SubmitButton = styled.button.attrs({ type: "submit" })`
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -50,7 +45,6 @@ export default class CommentInput extends React.Component {
           return handleSubmit({ author: author, text: commentValue });
         }}
       >
-        {/* <Label htmlFor="comment">Comment:</Label> */}
         <TextInput
           value={commentValue}
           onChange={e => this.setState({ commentValue: e.target.value })}
