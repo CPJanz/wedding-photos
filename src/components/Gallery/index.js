@@ -5,6 +5,7 @@ import firebase from "../../utils/firebase";
 import styled from "styled-components";
 import AddPhotoButton from "../AddPhotoButton";
 import FetchPhotoButton from "../FetchPhotoButton";
+import PhotoStack from "../PhotoStack";
 
 // ----------------------------------------------- Temporary data. remove once backend is set up
 import TEMPDATA from "../../utils/tempData";
@@ -22,7 +23,7 @@ function generateSampleImages() {
       comments: SAMPLE_COMMENTS.slice(
         0,
         Math.floor(Math.random() * SAMPLE_COMMENTS.length)
-      )
+      ),
     });
     REMAINING_PHOTOS--;
   }
@@ -46,7 +47,7 @@ const Wrapper = styled.div`
 export default class Gallery extends React.Component {
   state = {
     images: null,
-    foundNewPhotos: true
+    foundNewPhotos: true,
   };
 
   componentDidMount = () => {
@@ -55,18 +56,18 @@ export default class Gallery extends React.Component {
 
   fetchNewPhotos = () => {
     const newPhotos = generateSampleImages();
-    this.setState(state => {
+    this.setState((state) => {
       return {
         images: state.images.concat(newPhotos),
-        foundNewPhotos: newPhotos.length > 0 ? true : false
+        foundNewPhotos: newPhotos.length > 0 ? true : false,
       };
     });
   };
 
-  submitNewPhoto = async photo => {
+  submitNewPhoto = async (photo) => {
     photo.comments = [];
     photo.url = await firebase.uploadImage(photo.url);
-    this.setState(state => {
+    this.setState((state) => {
       return { images: state.images.concat(photo) };
     });
   };
@@ -74,6 +75,16 @@ export default class Gallery extends React.Component {
   render() {
     const { images, foundNewPhotos } = this.state;
     const screenWidth = window.screen.width;
+    let photos = [];
+    if (images !== null) {
+      photos = images.map((image, index) => {
+        return {
+          ...image,
+          size: screenWidth > 400 ? 200 : 150,
+          maxRotation: MAX_ROTATION,
+        };
+      });
+    }
     return (
       <React.Fragment>
         {images === null ? (
@@ -81,14 +92,15 @@ export default class Gallery extends React.Component {
         ) : (
           <Wrapper>
             {/* <AddPhotoButton submitNewPhoto={this.submitNewPhoto} /> */}
-            {images.map((image, index) => (
+            <PhotoStack photos={photos} />
+            {/* {images.map((image, index) => (
               <Photo
                 key={index}
                 size={screenWidth > 400 ? 200 : 150}
                 maxRotation={MAX_ROTATION}
                 {...image}
               />
-            ))}
+            ))} */}
             {/* {foundNewPhotos && <FetchPhotoButton fetch={this.fetchNewPhotos} />} */}
           </Wrapper>
         )}
